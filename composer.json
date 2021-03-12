@@ -1,0 +1,33 @@
+{
+  "name": "shumorkiniv/yii2-inn-validator",
+  "type": "yii2-extension",
+  "description": "Yii2 extension for validate requisites of the legal entity.",
+  "keywords": [
+    "yii2",
+    "extension",
+    "inn",
+    "ogrn",
+    "ogrnip",
+    "okpo",
+    "validator",
+    "validation",
+    "requisites"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "shumorkiniv",
+      "email": "shumorkinilya@mail.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "shumorkiniv\\validators\\": "src/"
+    }
+  }
+}
