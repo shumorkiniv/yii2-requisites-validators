@@ -152,10 +152,6 @@ class InnValidator extends Validator
 
         $checkNumber = $checkSum - self::DIVIDER * (int)$diff;
 
-        if ($checkNumber > 9) {
-            $checkNumber = $checkNumber % 10;
-        }
-
-        return $checkNumber;
+        return $checkNumber > 9 ? $checkNumber % 10 : $checkNumber;
     }
 }
