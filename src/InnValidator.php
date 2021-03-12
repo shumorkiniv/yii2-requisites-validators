@@ -21,7 +21,7 @@ class InnValidator extends Validator
     /** @var string Сообщение о неверном количестве знаков */
     const WRONG_COUNT_ERROR_MESSAGE = 'ИНН должен состоять из 11 или 12 чисел.';
     /** @var string Сообщение о неверном символе */
-    const WRON_CHAR_ERROR_MESSAGE = 'ИНН должен состоять только из цифр.';
+    const WRONG_CHAR_ERROR_MESSAGE = 'ИНН должен состоять только из цифр.';
     /** @var string Сообщение при проваленной проверки контрольных чисел */
     const INVALID_VALUE_ERROR_MESSAGE = 'Несуществующий ИНН.';
 
@@ -50,7 +50,7 @@ class InnValidator extends Validator
         }
 
         if (!is_numeric($value)) {
-            return [self::WRON_CHAR_ERROR_MESSAGE, ''];
+            return [self::WRONG_CHAR_ERROR_MESSAGE, ''];
         }
 
         $this->numbers = array_map('intval', str_split($value));
