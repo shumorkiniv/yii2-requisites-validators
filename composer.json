@@ -30,6 +30,11 @@
       "shumorkiniv\\validators\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "shumorkiniv\\tests\\": "tests/"
+    }
+  },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
   }
