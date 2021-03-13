@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@master
-      - name: test
       - name: composer install
         run: composer install
       - name: run tests
