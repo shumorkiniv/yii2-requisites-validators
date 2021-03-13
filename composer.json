@@ -1,5 +1,5 @@
 {
-  "name": "shumorkiniv/yii2-inn-validator",
+  "name": "shumorkiniv/yii2-requisites-validator",
   "type": "yii2-extension",
   "description": "Yii2 extension for validate requisites of the legal entity.",
   "keywords": [
