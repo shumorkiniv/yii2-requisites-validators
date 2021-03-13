@@ -18,4 +18,4 @@ jobs:
       - name: composer install
         run: composer install
       - name: run tests
-        run: /usr/bin/php -f bin/phpunit
+        run: php7.4 vendor/bin/phpunit
