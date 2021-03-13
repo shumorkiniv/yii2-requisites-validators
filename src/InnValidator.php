@@ -3,6 +3,7 @@
 namespace shumorkiniv\validators;
 
 use yii\validators\Validator;
+use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 /**
  * Class InnValidator
@@ -41,10 +42,10 @@ class InnValidator extends Validator
     /** @var int[] Coefficients for check check number of 10-digit INN */
     private const N1_COEFFICIENTS_LEGAL_ENTITY = [2, 4, 10, 3, 5, 9, 4, 6, 8];
 
-    /** @var string User wrong count message */
-    public string $wrongLengthMessage;
-    /** @var string User wrong character message */
-    public string $wrongCharMessage;
+    /** @var ?string User wrong count message */
+    public ?string $wrongLengthMessage = null;
+    /** @var ?string User wrong character message */
+    public ?string $wrongCharMessage = null;
 
     /** @var array */
     private array $numbers;
@@ -54,9 +55,29 @@ class InnValidator extends Validator
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->wrongLengthMessage === null) {
+            $this->wrongLengthMessage = self::DEFAULT_ERROR_MESSAGES['wrongLength'];
+        }
+
+        if ($this->wrongCharMessage === null) {
+            $this->wrongCharMessage = self::DEFAULT_ERROR_MESSAGES['wrongChar'];
+        }
+
+        if ($this->message === null) {
+            $this->message = self::DEFAULT_ERROR_MESSAGES['invalidValue'];
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function validateValue($value): ?array
     {
-        if (!is_int($value) || !is_string($value)) {
+        if (!is_int($value) && !is_string($value)) {
             return [$this->message ?: self::DEFAULT_ERROR_MESSAGES['invalidValue'], []];
         }
 
@@ -65,11 +86,11 @@ class InnValidator extends Validator
         }
 
         if (strlen($value) !== self::LEGAL_ENTITY_LENGTH && strlen($value) !== self::INDIVIDUAL_LENGTH) {
-            return [$this->wrongLengthMessage ?: self::DEFAULT_ERROR_MESSAGES['wrongLength'], []];
+            return [$this->wrongLengthMessage, []];
         }
 
         if (!is_numeric($value)) {
-            return [$this->wrongCharMessage ?: self::DEFAULT_ERROR_MESSAGES['wrongChar'], []];
+            return [$this->wrongCharMessage, []];
         }
 
         $this->numbers = array_map('intval', str_split($value));
@@ -77,13 +98,13 @@ class InnValidator extends Validator
 
         if ($this->length === self::LEGAL_ENTITY_LENGTH) {
             if (!$this->checkN1CheckNumber()) {
-                return [$this->message ?: self::DEFAULT_ERROR_MESSAGES['invalidValue'], []];
+                return [$this->message, []];
             }
         }
 
         if ($this->length === self::INDIVIDUAL_LENGTH) {
             if (!$this->checkN1CheckNumber() || !$this->checkN2CheckNumber()) {
-                return [$this->message ?: self::DEFAULT_ERROR_MESSAGES['invalidValue'], []];
+                return [$this->message, []];
             }
         }
 
@@ -116,7 +137,7 @@ class InnValidator extends Validator
      */
     private function checkN2CheckNumber(): bool
     {
-        $checkNumber = $this->calculateCheckNumber($this->calculateCheckSum($this->twelveSecondCoefficients));
+        $checkNumber = $this->calculateCheckNumber($this->calculateCheckSum(self::N2_COEFFICIENTS_INDIVIDUAL));
 
         return $checkNumber === $this->numbers[self::COMPARED_NUMBER_INDIVIDUAL_INDEX2];
     }
