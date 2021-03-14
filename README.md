@@ -6,4 +6,4 @@ Yii2 extension for validate requisites of the legal entity.
 
 This is an extension for validate requisites of legal entities or individual.
 
-v0.0.1 - only INN validation
+v0.0.2 - only INN, OGRN, OGRNIP validation
