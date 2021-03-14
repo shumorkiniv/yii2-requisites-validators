@@ -5,12 +5,15 @@ namespace shumorkiniv\tests;
 
 
 use shumorkiniv\validators\InnValidator;
+use shumorkiniv\validators\OgrnOgrnipValidator;
 use yii\base\Model;
 
 class TestModel extends Model
 {
-    /** @var mixed Test inn attribute */
+    /** @var mixed Test INN attribute */
     public $inn;
+    /** @var mixed Test OGRN attribute */
+    public $ogrn;
 
     /**
      * @inheritdoc
@@ -18,7 +21,8 @@ class TestModel extends Model
     public function rules()
     {
         return [
-            [['inn'], InnValidator::class]
+            [['inn'], InnValidator::class],
+            [['ogrn'], OgrnOgrnipValidator::class]
         ];
     }
 }

@@ -47,10 +47,25 @@ class InnValidatorTest extends TestCase
 
         $this->assertFalse($model->hasErrors());
 
-        $model->inn = $innString;
+        $model->inn = $innInt;
         $validator->validateAttribute($model, 'inn');
 
         $this->assertFalse($model->hasErrors());
+    }
+
+    /**
+     * @dataProvider failureDataProvider
+     * @param mixed $inn
+     */
+    public function testValidateAttributeFailure($inn)
+    {
+        $model = new TestModel();
+        $validator = new InnValidator();
+
+        $model->inn = $inn;
+        $validator->validateAttribute($model, 'inn');
+
+        $this->assertTrue($model->hasErrors());
     }
 
     public function testCustomErrorMessages()

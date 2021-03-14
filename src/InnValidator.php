@@ -2,8 +2,6 @@
 
 namespace shumorkiniv\validators;
 
-use yii\validators\Validator;
-use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 /**
  * Class InnValidator
@@ -13,7 +11,7 @@ use function Webmozart\Assert\Tests\StaticAnalysis\null;
  *
  * @author Shumorkin Ilya <shumorkinilya@mail.ru>
  */
-class InnValidator extends Validator
+class InnValidator extends RequisitesValidator
 {
     /** @var int Divider for check sum */
     const DIVIDER = 11;
@@ -28,13 +26,6 @@ class InnValidator extends Validator
     /** @var int Length of INN for individuals */
     const INDIVIDUAL_LENGTH = 12;
 
-    /** @var string[] Default error messages */
-    private const DEFAULT_ERROR_MESSAGES = [
-        'wrongLength' => 'ИНН должен состоять из 11 или 12 чисел.',
-        'wrongChar' => 'ИНН должен состоять только из цифр.',
-        'invalidValue' => 'Несуществующий ИНН.',
-    ];
-
     /** @var int[] Coefficients for check first check number of 12-digit INN */
     private const N1_COEFFICIENTS_INDIVIDUAL = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8];
     /** @var int[] Coefficients for check first check number of 12-digit INN */
@@ -42,34 +33,24 @@ class InnValidator extends Validator
     /** @var int[] Coefficients for check check number of 10-digit INN */
     private const N1_COEFFICIENTS_LEGAL_ENTITY = [2, 4, 10, 3, 5, 9, 4, 6, 8];
 
-    /** @var ?string User wrong count message */
-    public ?string $wrongLengthMessage = null;
-    /** @var ?string User wrong character message */
-    public ?string $wrongCharMessage = null;
-
-    /** @var array */
-    private array $numbers;
-    /** @var int */
-    private int $length;
+    /**
+     * @inheritdoc
+     */
+    protected function getDefaultErrorMessages(): array
+    {
+        return [
+            'wrongLength' => 'ИНН должен состоять из 11 или 12 чисел.',
+            'wrongChar' => 'ИНН должен состоять только из цифр.',
+            'invalidValue' => 'Несуществующий ИНН.',
+        ];
+    }
 
     /**
      * @inheritdoc
      */
-    public function init()
+    protected function checkValueLength(string $value): bool
     {
-        parent::init();
-
-        if ($this->wrongLengthMessage === null) {
-            $this->wrongLengthMessage = self::DEFAULT_ERROR_MESSAGES['wrongLength'];
-        }
-
-        if ($this->wrongCharMessage === null) {
-            $this->wrongCharMessage = self::DEFAULT_ERROR_MESSAGES['wrongChar'];
-        }
-
-        if ($this->message === null) {
-            $this->message = self::DEFAULT_ERROR_MESSAGES['invalidValue'];
-        }
+        return strlen($value) === self::LEGAL_ENTITY_LENGTH || strlen($value) === self::INDIVIDUAL_LENGTH;
     }
 
     /**
@@ -77,24 +58,11 @@ class InnValidator extends Validator
      */
     protected function validateValue($value): ?array
     {
-        if (!is_int($value) && !is_string($value)) {
-            return [$this->message ?: self::DEFAULT_ERROR_MESSAGES['invalidValue'], []];
-        }
+        $preValidate = $this->preValidate($value);
 
-        if (is_int($value)) {
-            $value = (string)$value;
+        if (!empty($preValidate)) {
+            return $preValidate;
         }
-
-        if (strlen($value) !== self::LEGAL_ENTITY_LENGTH && strlen($value) !== self::INDIVIDUAL_LENGTH) {
-            return [$this->wrongLengthMessage, []];
-        }
-
-        if (!is_numeric($value)) {
-            return [$this->wrongCharMessage, []];
-        }
-
-        $this->numbers = array_map('intval', str_split($value));
-        $this->length = count($this->numbers);
 
         if ($this->length === self::LEGAL_ENTITY_LENGTH) {
             if (!$this->checkN1CheckNumber()) {
