@@ -3,7 +3,6 @@
 
 namespace shumorkiniv\validators;
 
-use yii\validators\Validator;
 
 /**
  * Class OgrnOgrnipValidator
