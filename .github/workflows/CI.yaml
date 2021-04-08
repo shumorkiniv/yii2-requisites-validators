@@ -61,3 +61,6 @@ jobs:
         run: "vendor/bin/phpunit --verbose --colors=always --coverage-clover build/logs/clover.xml --coverage-text"
       - name: "phpunit-coverage-badge"
         uses: "timkrase/phpunit-coverage-badge@v1.2.0"
+        with:
+          coverage_badge_path: 'coverage.svg'
+          push_badge: true
