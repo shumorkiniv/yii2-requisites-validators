@@ -10,7 +10,7 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
-    <coverage cacheDirectory="tests/output/code-coverage"
+    <coverage cacheDirectory="./build/cache/code-coverage"
               processUncoveredFiles="true">
         <include>
             <directory>src/</directory>
@@ -21,7 +21,7 @@
         </exclude>
         <report>
             <text outputFile="php://stdout" showUncoveredFiles="true"/>
-            <html outputDirectory="tests/output"/>
+            <html outputDirectory="./build/coverage/"/>
             <clover outputFile="build/logs/clover.xml"/>
         </report>
     </coverage>
