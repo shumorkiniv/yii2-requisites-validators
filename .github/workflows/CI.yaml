@@ -59,8 +59,5 @@ jobs:
         run: "composer install"
       - name: "run tests"
         run: "vendor/bin/phpunit --verbose --colors=always --coverage-clover build/logs/clover.xml --coverage-text"
-      - name: "Coverage"
-        uses: "romeovs/lcov-reporter-action@v0.2.16"
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: "build/logs/clover.xml"
+      - name: Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@0.2.0
