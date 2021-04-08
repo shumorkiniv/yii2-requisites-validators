@@ -61,14 +61,14 @@ jobs:
         with:
           coverage_badge_path: 'coverage.svg'
           push_badge: true
-          report: "build/coverage/index.html"
+          report: "./build/coverage/index.html"
           report_type: "html"
           repo_token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Archive code coverage results"
         uses: "actions/upload-artifact@v2"
         with:
           name: "code-coverage-report"
-          path: "build/coverage/"
+          path: "./build/coverage/"
 
   print-code-coverage:
     name: "Print code coverage"
@@ -79,8 +79,14 @@ jobs:
         uses: "actions/download-artifact@v2"
         with:
           name: "code-coverage-report"
+      - name: "Check Path"
+        run: |
+          "pwd"
+          "ls -la"
+          "ls -la ./build/"
+          "ls -la ./build/coverage/"
       - name: "Report"
         uses: "danhunsaker/clover-reporter-action@v0.2.17-clover"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          clover-file: "build/coverage/clover.xml"
+          clover-file: "./build/coverage/clover.xml"
