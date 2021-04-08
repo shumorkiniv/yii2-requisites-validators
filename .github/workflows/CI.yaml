@@ -27,14 +27,14 @@ jobs:
     steps:
       - name: "checkout"
         uses: "actions/checkout@master"
-      - name: "composer install"
-        run: "composer install"
-      - name: "run tests"
+      - uses: "shivammathur/setup-php@v2"
         with:
           php-version: "7.4"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
+      - name: "composer install"
+        run: "composer install"
+      - name: "run tests"
         run: "vendor/bin/phpunit"
       - name: "Publish coverage report to Codecov"
         uses: "codecov/codecov-action@v1"
-
