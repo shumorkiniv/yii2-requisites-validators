@@ -61,7 +61,7 @@ jobs:
         with:
           coverage_badge_path: 'coverage.svg'
           push_badge: true
-          report: "./docs/coverage/index.html"
+          report: "./docs/"
           report_type: "html"
           repo_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish test coverage report
