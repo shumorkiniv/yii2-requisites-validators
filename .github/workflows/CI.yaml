@@ -67,7 +67,7 @@ jobs:
       - name: Publish test coverage report
         uses: EndBug/add-and-commit@v4
         with:
-          add: "./docs/coverage/index.html"
+          add: "./docs/"
           force: true
           message: Add generated docs
         env:
