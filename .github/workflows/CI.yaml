@@ -8,32 +8,7 @@ on:
       - '*'
 
 jobs:
-  setup-dependencies:
-    name: "Set up dependencies"
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: "checkout"
-        uses: "actions/checkout@master"
-      - uses: "shivammathur/setup-php@v2"
-        with:
-          php-version: "7.4"
-          coverage: "pcov"
-          ini-values: "memory_limit=-1"
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-vendor
-        with:
-          path: vendor/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: "composer install"
-        run: "composer install"
-
-  static-analysis:
+   static-analysis:
     name: "Static Analysis"
     runs-on: "ubuntu-latest"
     steps:
@@ -44,6 +19,17 @@ jobs:
           php-version: "7.4"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
+      - name: Cache composer
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-vendor
+        with:
+          path: vendor/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: "composer install"
         run: "composer install"
       - name: "Run Psalm"
@@ -60,6 +46,17 @@ jobs:
           php-version: "7.4"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
+      - name: Cache composer
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-vendor
+        with:
+          path: vendor/
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: "composer install"
         run: "composer install"
       - name: "run tests"
