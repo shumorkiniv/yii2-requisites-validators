@@ -64,3 +64,5 @@ jobs:
         with:
           coverage_badge_path: 'coverage.svg'
           push_badge: true
+          report: "build/coverage/index.html"
+          report_type: "html"
