@@ -6,3 +6,6 @@
 .phpunit.result.cache
 
 /psalm.xml
+
+/phpdoc.xml
+/docs/documentation/cache/
