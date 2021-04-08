@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<phpunit bootstrap="./vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
          backupGlobals="true"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         stopOnFailure="false">
+         cacheResultFile="./tests/output/test-results">
     <testsuites>
-        <testsuite name="Yii Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="unit">
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <coverage cacheDirectory="tests/output/code-coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory>src/</directory>
+        </include>
+        <exclude>
+            <directory>tests/</directory>
+            <directory>vendor/</directory>
+        </exclude>
+        <report>
+            <text outputFile="php://stdout" showUncoveredFiles="true"/>
+            <html outputDirectory="tests/output"/>
+        </report>
+    </coverage>
 </phpunit>

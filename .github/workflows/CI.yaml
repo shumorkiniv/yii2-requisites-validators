@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - '!refs/tags/*'
+    branches:
+      - '*'
+
+jobs:
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+        with:
+          php-version: 7.4
+          coverage: none
+          ini-values: memory_limit=-1
+      - name: Run Psalm
+        run: vendor/bin/psalm
+
+  phpunit:
+    name: Unit testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+      - name: composer install
+        run: composer install
+      - name: run tests
+        with:
+          php-version: 7.4
+          coverage: pcov
+          ini-values: memory_limit=-1
+        run: vendor/bin/phpunit
+      - name: Publish coverage report to Codecov
+        uses: codecov/codecov-action@v1
+
