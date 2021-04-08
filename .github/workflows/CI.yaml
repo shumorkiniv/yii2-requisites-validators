@@ -46,7 +46,7 @@ jobs:
           coverage: "pcov"
           ini-values: "memory_limit=-1"
       - name: "Get Composer Cache Directory"
-      - uses: actions/cache@v2
+        uses: actions/cache@v2
         with:
           path: "vendor/"
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
