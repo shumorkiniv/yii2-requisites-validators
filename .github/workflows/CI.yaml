@@ -19,17 +19,16 @@ jobs:
           php-version: "7.4"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
-      - name: Cache composer
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-vendor
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
         with:
-          path: vendor/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-composer-
       - name: "composer install"
         run: "composer install"
       - name: "Run Psalm"
@@ -46,17 +45,16 @@ jobs:
           php-version: "7.4"
           coverage: "pcov"
           ini-values: "memory_limit=-1"
-      - name: Cache composer
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-vendor
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
         with:
-          path: vendor/
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-composer-
       - name: "composer install"
         run: "composer install"
       - name: "run tests"
