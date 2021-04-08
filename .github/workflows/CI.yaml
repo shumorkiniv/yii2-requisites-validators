@@ -55,7 +55,7 @@ jobs:
       - name: "composer install"
         run: "composer install"
       - name: "run tests"
-        run: "vendor/bin/phpunit --verbose --colors=always --coverage-clover build/logs/clover.xml --coverage-text"
+        run: "vendor/bin/phpunit"
       - name: "phpunit-coverage-badge"
         uses: "timkrase/phpunit-coverage-badge@v1.2.0"
         with:
