@@ -4,7 +4,7 @@
          bootstrap="./vendor/autoload.php"
          backupGlobals="true"
          colors="true"
-         cacheResultFile="./build/cache/phpunit.result.cache">
+         cacheResultFile="build/cache/phpunit.result.cache">
     <testsuites>
         <testsuite name="unit">
             <directory>./tests</directory>
@@ -22,6 +22,7 @@
         <report>
             <text outputFile="php://stdout" showUncoveredFiles="true"/>
             <html outputDirectory="tests/output"/>
+            <clover outputFile="build/logs/clover.xml"/>
         </report>
     </coverage>
 </phpunit>

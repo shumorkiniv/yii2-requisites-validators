@@ -58,6 +58,6 @@ jobs:
       - name: "composer install"
         run: "composer install"
       - name: "run tests"
-        run: "vendor/bin/phpunit"
+        run: "vendor/bin/phpunit --verbose --colors=always --coverage-clover build/logs/clover.xml --coverage-text"
       - name: "Publish coverage report to Codecov"
         uses: "codecov/codecov-action@v1"
