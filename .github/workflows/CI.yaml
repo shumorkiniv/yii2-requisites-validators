@@ -66,3 +66,4 @@ jobs:
           push_badge: true
           report: "build/coverage/index.html"
           report_type: "html"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
