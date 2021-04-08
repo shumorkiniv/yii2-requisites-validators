@@ -14,9 +14,10 @@ jobs:
     steps:
       - name: "checkout"
         uses: "actions/checkout@master"
+      - uses: "shivammathur/setup-php@v2"
         with:
           php-version: "7.4"
-          coverage: "none"
+          coverage: "pcov"
           ini-values: "memory_limit=-1"
       - name: "composer install"
         run: "composer install"
